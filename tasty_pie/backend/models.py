@@ -10,6 +10,9 @@ class Author(models.Model):
     def __unicode__(self):
         return self.pseudo
 
+    def some_fun(self):
+        return 'just for test'
+
 
 class Genre(models.Model):
 

@@ -4,9 +4,15 @@ from django.contrib import admin
 admin.autodiscover()
 
 #api import
-from backend.api import ArticleResource
+from tastypie.api import Api
+from backend.api import ArticleResource, GenreResource, AuthorResource, UserResource
 
-article_resource = ArticleResource()
+api = Api(api_name='v1')
+
+api.register(ArticleResource())
+api.register(GenreResource())
+api.register(AuthorResource())
+api.register(UserResource())
 
 urlpatterns = patterns('',
     # Examples:
@@ -18,5 +24,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include(article_resource.urls)),
+    url(r'^api/', include(api.urls)),
 )
