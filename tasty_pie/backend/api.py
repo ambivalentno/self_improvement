@@ -1,7 +1,7 @@
 
 import json
 from tastypie import fields
-from tastypie.authorization import DjangoAuthorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.authentication import BasicAuthentication
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.paginator import Paginator
@@ -19,6 +19,7 @@ class GenreResource(ModelResource):
         queryset = Genre.objects.all()
         resource_name = 'genre'
         filtering = {'title': ALL}
+        authorization = Authorization()
 
 
 class UserResource(ModelResource):
@@ -106,3 +107,5 @@ class ArticleResource(ModelResource):
 #misc:
 #full=True in ForeignKey, ToMAnyField shows full data, not just links
 #limit/offset - http://localhost:8000/api/v1/article/?format=json&limit=1&offset=1
+# autheticated GET:
+#curl --dump-header - -H "Content-Type: application/json" -X GET http://localhost:8000/api/v1/article/ --user admin:admin
