@@ -3,8 +3,8 @@ import json
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
 from tastypie.authentication import BasicAuthentication
-
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie.paginator import Paginator
 from tastypie.resources import ModelResource
 
 from django.db.models import Q
@@ -33,7 +33,7 @@ class AuthorResource(ModelResource):
         queryset = Author.objects.all()
         resource_name = 'author'
         #fields=['pseudo']
-        #authentication = BasicAuthentication()
+        authentication = BasicAuthentication()
         filtering = {'pseudo': ALL}
 
     user = fields.OneToOneField(UserResource, 'user')
@@ -61,6 +61,7 @@ class ArticleResource(ModelResource):
                      'text': ALL,
                      'q': ALL
                      }
+        paginator_class = Paginator
 
     def build_filters(self, filters=None):
         if filters is None:
@@ -101,3 +102,7 @@ class ArticleResource(ModelResource):
         #http://localhost:8000/api/v1/article/?genre__title=NF&format=json
         #4. custom filter:
         #authors__pseudo__startswith converts to q thanks to the build_filters and apply_filters
+
+#misc:
+#full=True in ForeignKey, ToMAnyField shows full data, not just links
+#limit/offset - http://localhost:8000/api/v1/article/?format=json&limit=1&offset=1
