@@ -1,7 +1,10 @@
 Django==1.4.3
+WebOb==1.2.3
+WebTest==1.4.3
 argparse==1.2.1
 distribute==0.6.24
 django-tastypie==0.9.11
+django-webtest==1.5.4
 drest==0.9.10
 httplib2==0.7.7
 mimeparse==0.1.3

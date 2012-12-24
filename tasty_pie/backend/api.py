@@ -15,6 +15,7 @@ from backend.models import Article, Author, Genre
 
 
 class GenreResource(ModelResource):
+
     class Meta:
         queryset = Genre.objects.all()
         resource_name = 'genre'
@@ -92,20 +93,21 @@ class ArticleResource(ModelResource):
 
 
 
-        #0. Basic query
-        #http://localhost:8000/api/v1/article/?format=json
-        #1. Simple queries (exact)
-        #http://localhost:8000/api/v1/article/?format=json&title=third
-        #2. Simple filtering (startswith)
-        #http://localhost:8000/api/v1/article/?format=json&title__startswith=t
-        #3. relations
-        #http://localhost:8000/api/v1/article/?format=json&authors__pseudo__startswith=a
-        #http://localhost:8000/api/v1/article/?genre__title=NF&format=json
-        #4. custom filter:
-        #authors__pseudo__startswith converts to q thanks to the build_filters and apply_filters
+#         0. Basic query
+#         http://localhost:8000/api/v1/article/?format=json
+#         1. Simple queries (exact)
+#         http://localhost:8000/api/v1/article/?format=json&title=third
+#         2. Simple filtering (startswith)
+#         http://localhost:8000/api/v1/article/?format=json&title__startswith=t
+#         3. relations
+#         http://localhost:8000/api/v1/article/?format=json&authors__pseudo__startswith=a
+#         http://localhost:8000/api/v1/article/?genre__title=NF&format=json
+#         4. custom filter:
+#         authors__pseudo__startswith converts to q thanks to the build_filters and apply_filters
 
-#misc:
-#full=True in ForeignKey, ToMAnyField shows full data, not just links
-#limit/offset - http://localhost:8000/api/v1/article/?format=json&limit=1&offset=1
+# misc:
+# full=True in ForeignKey, ToMAnyField shows full data, not just links
+# limit/offset - http://localhost:8000/api/v1/article/?format=json&limit=1&offset=1
 # autheticated GET:
-#curl --dump-header - -H "Content-Type: application/json" -X GET http://localhost:8000/api/v1/article/ --user admin:admin
+# curl --user admin:admin --dump-header -H "Content-Type: application/json" -X GET http://localhost:8000/api/v1/article/
+# funny that official dox for testing don't work with pip installed tastypie
