@@ -1,8 +1,9 @@
 
 import json
 from tastypie import fields
-from tastypie.authorization import Authorization
+from tastypie.authorization import DjangoAuthorization
 from tastypie.authentication import BasicAuthentication
+
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from tastypie.resources import ModelResource
 
@@ -52,7 +53,8 @@ class ArticleResource(ModelResource):
     class Meta:
         queryset = Article.objects.all()
         resource_name = 'article'
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
+        authentication = BasicAuthentication()
         filtering = {'authors': ALL_WITH_RELATIONS,
                      'title': ALL,
                      'genre': ALL_WITH_RELATIONS,
