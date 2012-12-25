@@ -34,17 +34,18 @@ class AuthorResource(ModelResource):
     class Meta:
         queryset = Author.objects.all()
         resource_name = 'author'
-        #fields=['pseudo']
-        authentication = BasicAuthentication()
+        fields=['pseudo']
         filtering = {'pseudo': ALL}
+        authorization = DjangoAuthorization()
+        authentication = BasicAuthentication()
 
     user = fields.OneToOneField(UserResource, 'user')
 
-    def dehydrate(self, bundle):
-        """custom field for all objects"""
-        obj = self.obj_get(id=bundle.data['id'])
-        bundle.data['some_field'] = Author.objects.get(id=1).some_fun()
-        return bundle
+    # def dehydrate(self, bundle):
+    #     """custom field for all objects"""
+    #     obj = self.obj_get(id=bundle.data['id'])
+    #     bundle.data['some_field'] = Author.objects.get(id=1).some_fun()
+    #     return bundle
 
 
 class ArticleResource(ModelResource):
