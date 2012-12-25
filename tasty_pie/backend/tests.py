@@ -42,4 +42,22 @@ class MyTest(LiveServerTestCase):
         article_objects = api.article.get().data['objects']
         assert article_objects[0]['title'] == article_data['title']
 
+        #patch article
+        ##create one more author
+        user_uri = api.user.get().data['objects'][1]['resource_uri']
+        api.author.post(dict(pseudo='mimi', user=user_uri))
+        author2_data = api.author.get(2).data
+        assert author2_data['pseudo'] == 'mimi'
+        author2_data['pseudo'] = 'mimi2'
+        ##test put author in parallel
+        api.author.put(2, author2_data)
+        author2_data = api.author.get(2).data
+        assert author2_data['pseudo'] == 'mimi2'
 
+        #really patch article
+        ##get old authors
+        old_authors = api.article.get(1).data['authors']
+        old_authors.append(author2_data['resource_uri'])
+        ##patch
+        api.article.patch(1, dict(authors=old_authors))
+        assert api.article.get(1).data['authors'] == old_authors
