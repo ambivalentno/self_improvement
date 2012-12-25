@@ -92,6 +92,20 @@ class ArticleResource(ModelResource):
 
         return semi_filtered.filter(custom) if custom else semi_filtered
 
+    def dehydrate(self, bundle):
+        if self.get_resource_uri(bundle) == bundle.request.path:
+            #detail view. all fields are available
+            print "Detail"
+
+        if self.get_resource_uri(bundle) != bundle.request.path:
+            #delete some fields if we show all articles in a time
+            del(bundle.data['genre'])
+            del(bundle.data['authors'])
+            del(bundle.data['text'])
+            del(bundle.data['id'])
+
+        return bundle
+
 
 
 #         0. Basic query
