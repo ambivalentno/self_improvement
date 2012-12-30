@@ -28,12 +28,16 @@ class Genre(models.Model):
     def __unicode__(self):
         return self.title
 
+class Follow(models.Model):
+    article = models.ForeignKey('Article')
+    author = models.ForeignKey(Author)
+
 
 class Article(models.Model):
 
     title = models.CharField(max_length=100)
     text = models.TextField()
-    authors = models.ManyToManyField(Author)
+    authors = models.ManyToManyField(Author, throught=Follow)
     genre = models.ForeignKey(Genre)
 
     def __unicode__(self):
